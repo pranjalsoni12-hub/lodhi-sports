@@ -80,7 +80,7 @@ export default function CTAFooter() {
             WhatsApp Us
           </a>
           <a
-            href="https://sportsnextdoor.com"
+            href="https://lodhisport.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 border border-[#0a0a0a]/30 text-[#0a0a0a] px-10 py-4 text-sm uppercase tracking-[0.15em] hover:border-[#0a0a0a] transition-colors duration-300"
