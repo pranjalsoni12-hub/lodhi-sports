@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lodhi Sports — Health &amp; Fitness Since 1970</title>
+  <meta name="description" content="India's leading sports and fitness store. 1500+ products, 50+ premium brands. Badminton, Tennis, Fitness, Cricket and more." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger + Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.45/dist/lenis.min.js"></script>
+
+  <style>
+    /* ─── Reset & Base ──────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange:   #F97316;
+      --dark:     #0a0a0a;
+      --light:    #EEEAE4;
+      --ink:      #1a1209;
+      --ink-mid:  rgba(26,18,9,0.62);
+      --ink-faint:rgba(26,18,9,0.38);
+      --ff-head:  'Bebas Neue', sans-serif;
+      --ff-body:  'DM Sans', sans-serif;
+    }
+
+    html {
+      scroll-behavior: auto !important;
+      background: var(--dark);
+    }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ─── Custom Cursor ─────────────────────────────────────────────── */
+    #cursor-dot {
+      position: fixed; width: 6px; height: 6px;
+      background: var(--orange); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.05s;
+    }
+    #cursor-ring {
+      position: fixed; width: 32px; height: 32px;
+      border: 1px solid rgba(249,115,22,0.5); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+    }
+    @media (hover: none) { #cursor-dot, #cursor-ring { display: none; } body { cursor: auto; } }
+
+    /* ─── Scroll Progress ───────────────────────────────────────────── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; right: 0; height: 2px;
+      background: rgba(255,255,255,0.06); z-index: 9000;
+    }
+    #scroll-progress-bar {
+      height: 100%; width: 0%; background: var(--orange);
+      transform-origin: left; transition: width 0.05s linear;
+    }
+
+    /* ─── Loader ────────────────────────────────────────────────────── */
+    #loader {
+      position: fixed; inset: 0; background: var(--dark);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 9990; transition: opacity 0.6s ease;
+    }
+    #loader.hidden { opacity: 0; pointer-events: none; }
+    .loader-brand {
+      font-family: var(--ff-head); font-size: clamp(3rem, 8vw, 6rem);
+      letter-spacing: 0.08em; color: var(--light);
+      margin-bottom: 2rem;
+    }
+    .loader-brand span { color: var(--orange); }
+    #loader-bar-wrap {
+      width: 200px; height: 1px; background: rgba(255,255,255,0.12);
+      overflow: hidden;
+    }
+    #loader-bar {
+      height: 100%; width: 0%; background: var(--orange);
+      transition: width 0.2s ease;
+    }
+    #loader-percent {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.2em; color: rgba(255,255,255,0.3);
+      margin-top: 14px; text-transform: uppercase;
+    }
+
+    /* ─── Site Header ───────────────────────────────────────────────── */
+    .site-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 8000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw; height: 70px;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    .site-header.scrolled {
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .header-logo {
+      font-family: var(--ff-head); font-size: 1.5rem;
+      letter-spacing: 0.06em; color: var(--light); text-decoration: none;
+    }
+    .header-logo span { color: var(--orange); }
+    .header-nav {
+      display: flex; align-items: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .header-nav a {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .header-nav a:hover { color: var(--orange); }
+    .header-cta {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      background: var(--orange); color: #fff;
+      padding: 10px 22px; text-decoration: none;
+      transition: background 0.3s;
+    }
+    .header-cta:hover { background: #ea6c0a; }
+    .header-hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px;
+    }
+    .header-hamburger span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--light); transition: all 0.3s;
+    }
+    @media (max-width: 768px) {
+      .header-nav, .header-cta { display: none; }
+      .header-hamburger { display: flex; }
+    }
+
+    /* ─── Mobile Menu ───────────────────────────────────────────────── */
+    #mobile-menu {
+      position: fixed; inset: 0; background: var(--dark);
+      z-index: 7999; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s;
+    }
+    #mobile-menu.open { opacity: 1; pointer-events: all; }
+    #mobile-menu a {
+      font-family: var(--ff-head); font-size: clamp(2.5rem, 10vw, 5rem);
+      letter-spacing: 0.05em; color: var(--light); text-decoration: none;
+      transition: color 0.3s;
+    }
+    #mobile-menu a:hover { color: var(--orange); }
+    #mobile-close {
+      position: absolute; top: 24px; right: 5vw;
+      font-size: 2rem; color: var(--light); cursor: pointer;
+      background: none; border: none; line-height: 1;
+    }
+
+    /* ─── Hero Standalone ───────────────────────────────────────────── */
+    .hero-standalone {
+      position: relative; height: 100vh; width: 100%;
+      display: flex; align-items: flex-end; padding: 0 5vw 10vh;
+      z-index: 100; pointer-events: none;
+    }
+    .hero-inner { max-width: 55vw; }
+    .hero-label {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(249,115,22,0.8); margin-bottom: 1.2rem;
+    }
+    .hero-heading {
+      font-family: var(--ff-head);
+      font-size: clamp(7rem, 14vw, 14rem);
+      line-height: 0.88; letter-spacing: 0.02em;
+      text-transform: uppercase; color: var(--light);
+    }
+    .hero-heading .word { overflow: hidden; display: block; }
+    .hero-heading .word span { display: block; }
+    .hero-sub {
+      margin-top: 1.8rem;
+      font-family: var(--ff-body); font-size: clamp(0.85rem, 1.2vw, 1.1rem);
+      letter-spacing: 0.06em; color: rgba(238,234,228,0.55);
+      line-height: 1.7; max-width: 420px;
+    }
+    .hero-scroll-hint {
+      position: absolute; bottom: 3vh; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .hero-scroll-hint span {
+      font-family: var(--ff-body); font-size: 10px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--orange), transparent);
+      animation: pulse-line 1.8s ease-in-out infinite;
+    }
+    @keyframes pulse-line {
+      0%, 100% { opacity: 0.4; } 50% { opacity: 1; }
+    }
+
+    /* ─── Canvas ────────────────────────────────────────────────────── */
+    .canvas-wrap {
+      position: fixed; inset: 0; z-index: 0;
+      clip-path: circle(0% at 50% 50%);
+    }
+    canvas#canvas {
+      width: 100%; height: 100%; display: block;
+    }
+
+    /* ─── Dark Overlay ──────────────────────────────────────────────── */
+    #dark-overlay {
+      position: fixed; inset: 0; z-index: 5;
+      background: rgba(4,3,2,0); pointer-events: none;
+    }
+
+    /* ─── Marquee (Fixed) ───────────────────────────────────────────── */
+    .marquee-wrap {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+      overflow: hidden; pointer-events: none; opacity: 0;
+    }
+    .marquee-track {
+      display: flex; white-space: nowrap; width: max-content;
+      animation: marquee-left 18s linear infinite;
+    }
+    .marquee-track.reverse { animation: marquee-right 22s linear infinite; }
+    .marquee-text {
+      font-family: var(--ff-head);
+      font-size: clamp(10vw, 12vw, 15vw);
+      line-height: 1; letter-spacing: 0.03em;
+      text-transform: uppercase; padding-right: 4vw;
+    }
+    .marquee-text.dark { color: var(--ink); }
+    .marquee-text.orange { color: var(--orange); }
+    .marquee-text.faint { color: rgba(238,234,228,0.12); }
+    @keyframes marquee-left {
+      from { transform: translateX(0); } to { transform: translateX(-50%); }
+    }
+    @keyframes marquee-right {
+      from { transform: translateX(-50%); } to { transform: translateX(0); }
+    }
+
+    /* ─── Scroll Container ──────────────────────────────────────────── */
+    #scroll-container {
+      position: relative; height: 920vh; z-index: 10;
+    }
+
+    /* ─── Content Sections ──────────────────────────────────────────── */
+    .content-section {
+      position: absolute; left: 0; right: 0;
+      display: flex; align-items: center;
+      padding: 0 5vw; opacity: 0; pointer-events: none;
+    }
+    .section-inner { max-width: 40vw; }
+    .align-left  { padding-left: 5vw;  padding-right: 55vw; }
+    .align-right { padding-left: 55vw; padding-right: 5vw; }
+    .align-right .section-inner { text-align: right; }
+    .align-center {
+      justify-content: center; padding: 0;
+      text-align: center;
+    }
+    .align-center .section-inner { max-width: 70vw; }
+
+    .section-label {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(249,115,22,0.85); margin-bottom: 1.2rem;
+    }
+    .section-heading {
+      font-family: var(--ff-head);
+      font-size: clamp(3.5rem, 8vw, 9rem);
+      line-height: 0.88; letter-spacing: 0.02em;
+      text-transform: uppercase; color: var(--light);
+    }
+    .section-heading .accent { color: var(--orange); }
+    .section-heading.dark-text { color: var(--ink); }
+    .section-heading.dark-text .accent { color: var(--orange); }
+    .section-body {
+      margin-top: 1.4rem;
+      font-size: clamp(0.85rem, 1.1vw, 1rem);
+      letter-spacing: 0.04em; color: rgba(238,234,228,0.52);
+      line-height: 1.75; max-width: 380px;
+    }
+    .section-body.dark-text { color: var(--ink-mid); }
+
+    /* ─── Stats Section ─────────────────────────────────────────────── */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; width: 100%; max-width: 100vw;
+    }
+    .stat-item {
+      display: flex; flex-direction: column;
+      align-items: center; padding: 4rem 2rem;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: var(--ff-head);
+      font-size: clamp(4.5rem, 9vw, 10rem);
+      line-height: 1; letter-spacing: 0.02em; color: var(--light);
+    }
+    .stat-suffix {
+      font-family: var(--ff-head); font-size: clamp(2rem, 4vw, 4.5rem);
+      color: var(--orange); margin-left: 4px; line-height: 1;
+    }
+    .stat-row { display: flex; align-items: baseline; }
+    .stat-label {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(238,234,228,0.35); margin-top: 0.6rem;
+    }
+
+    /* ─── Trust Bullets ─────────────────────────────────────────────── */
+    .trust-list { list-style: none; margin-top: 2rem; }
+    .trust-list li {
+      display: flex; align-items: flex-start; gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+    .trust-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      border: 1px solid rgba(249,115,22,0.35); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; margin-top: 2px;
+    }
+    .trust-title {
+      font-family: var(--ff-body); font-size: 0.95rem;
+      font-weight: 500; letter-spacing: 0.04em;
+      color: var(--light); margin-bottom: 2px;
+    }
+    .trust-desc {
+      font-family: var(--ff-body); font-size: 0.8rem;
+      letter-spacing: 0.03em; color: rgba(238,234,228,0.4);
+    }
+
+    /* ─── CTA Section ───────────────────────────────────────────────── */
+    .cta-section {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 0 5vw; z-index: 50; text-align: center;
+      background: var(--dark);
+    }
+    .cta-eyebrow {
+      font-family: var(--ff-body); font-size: 11px;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(249,115,22,0.8); margin-bottom: 1.5rem;
+    }
+    .cta-heading {
+      font-family: var(--ff-head);
+      font-size: clamp(5rem, 13vw, 14rem);
+      line-height: 0.85; letter-spacing: 0.02em;
+      text-transform: uppercase; color: var(--light);
+      margin-bottom: 1rem;
+    }
+    .cta-heading .accent { color: var(--orange); }
+    .cta-sub {
+      font-family: var(--ff-body); font-size: 0.9rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(238,234,228,0.35); margin-bottom: 3.5rem;
+    }
+    .cta-buttons {
+      display: flex; align-items: center; gap: 1.5rem;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .btn-primary {
+      font-family: var(--ff-body); font-size: 12px;
+      letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
+      background: var(--orange); color: #fff;
+      padding: 16px 48px; text-decoration: none;
+      display: inline-block; transition: background 0.3s, transform 0.3s;
+    }
+    .btn-primary:hover { background: #ea6c0a; }
+    .btn-secondary {
+      font-family: var(--ff-body); font-size: 12px;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(238,234,228,0.55); text-decoration: none;
+      border-bottom: 1px solid rgba(238,234,228,0.2);
+      padding-bottom: 3px; transition: color 0.3s, border-color 0.3s;
+    }
+    .btn-secondary:hover { color: var(--orange); border-color: var(--orange); }
+
+    /* ─── CTA Footer Meta ───────────────────────────────────────────── */
+    .cta-footer {
+      position: absolute; bottom: 5vh; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5vw;
+    }
+    .cta-footer-logo {
+      font-family: var(--ff-head); font-size: 1.1rem;
+      letter-spacing: 0.06em; color: rgba(238,234,228,0.25);
+      text-decoration: none;
+    }
+    .cta-footer-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .cta-footer-links a {
+      font-family: var(--ff-body); font-size: 10px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(238,234,228,0.25); text-decoration: none;
+      transition: color 0.3s;
+    }
+    .cta-footer-links a:hover { color: var(--orange); }
+    .cta-footer-meta {
+      font-family: var(--ff-body); font-size: 10px;
+      letter-spacing: 0.14em; color: rgba(238,234,228,0.2);
+    }
+
+    /* ─── Mobile Overrides ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #scroll-container { height: 600vh; }
+      .hero-heading { font-size: clamp(5rem, 18vw, 8rem); }
+      .hero-inner { max-width: 90vw; }
+      .hero-sub { max-width: 85vw; }
+
+      .align-left, .align-right, .align-center {
+        padding: 0 6vw; justify-content: flex-start;
+      }
+      .section-inner, .align-right .section-inner { max-width: 88vw; text-align: left; }
+
+      .stats-grid { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 2.5rem 1.5rem; }
+
+      .cta-heading { font-size: clamp(3.5rem, 14vw, 6rem); }
+      .marquee-text { font-size: 20vw; }
+
+      .cta-footer { flex-direction: column; gap: 1rem; text-align: center; }
+      .cta-footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress"><div id="scroll-progress-bar"></div></div>
+
+  <!-- ── Loader ────────────────────────────────────────────────────── -->
+  <div id="loader">
+    <div class="loader-brand">LODHI <span>SPORTS</span></div>
+    <div id="loader-bar-wrap"><div id="loader-bar"></div></div>
+    <div id="loader-percent">0%</div>
+  </div>
+
+  <!-- ── Site Header ───────────────────────────────────────────────── -->
+  <header class="site-header" id="site-header">
+    <a href="#" class="header-logo">LODHI <span>SPORTS</span></a>
+    <nav>
+      <ul class="header-nav">
+        <li><a href="https://sportsnextdoor.com/collections/badminton" target="_blank">Badminton</a></li>
+        <li><a href="https://sportsnextdoor.com/collections/fitness" target="_blank">Fitness</a></li>
+        <li><a href="https://sportsnextdoor.com/collections/cricket" target="_blank">Cricket</a></li>
+        <li><a href="https://sportsnextdoor.com/collections/tennis" target="_blank">Tennis</a></li>
+        <li><a href="https://sportsnextdoor.com" target="_blank">All Sports</a></li>
+      </ul>
+    </nav>
+    <a href="https://wa.me/918368249099" target="_blank" class="header-cta">WhatsApp Us</a>
+    <button class="header-hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- ── Mobile Menu ──────────────────────────────────────────────── -->
+  <div id="mobile-menu">
+    <button id="mobile-close" aria-label="Close menu">✕</button>
+    <a href="https://sportsnextdoor.com/collections/badminton" target="_blank">Badminton</a>
+    <a href="https://sportsnextdoor.com/collections/fitness" target="_blank">Fitness</a>
+    <a href="https://sportsnextdoor.com/collections/cricket" target="_blank">Cricket</a>
+    <a href="https://sportsnextdoor.com/collections/tennis" target="_blank">Tennis</a>
+    <a href="https://wa.me/918368249099" target="_blank">WhatsApp</a>
+  </div>
+
+  <!-- ── Canvas ────────────────────────────────────────────────────── -->
+  <div class="canvas-wrap" id="canvas-wrap">
+    <canvas id="canvas"></canvas>
+  </div>
+
+  <!-- ── Dark Overlay ──────────────────────────────────────────────── -->
+  <div id="dark-overlay"></div>
+
+  <!-- ── Marquee (appears mid-scroll) ────────────────────────────── -->
+  <div class="marquee-wrap" id="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-text faint">BADMINTON&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">TENNIS&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">FITNESS&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">CRICKET&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">BOXING&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">TABLE TENNIS&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">BADMINTON&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">TENNIS&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">FITNESS&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">CRICKET&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">BOXING&nbsp;•&nbsp;</span>
+      <span class="marquee-text faint">TABLE TENNIS&nbsp;•&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ── Scroll Container ─────────────────────────────────────────── -->
+  <div id="scroll-container">
+
+    <!-- Hero (pinned at top, 0–18% scroll) -->
+    <div class="hero-standalone content-section" id="hero-section"
+         style="position:absolute; top:0; height:100vh; opacity:1; align-items:flex-end; padding-bottom:10vh;">
+      <div class="hero-inner">
+        <p class="hero-label">001 / Your Potential</p>
+        <h1 class="hero-heading" aria-label="Push Further">
+          <span class="word"><span id="hw1">PUSH</span></span>
+          <span class="word"><span id="hw2">FURTHER</span></span>
+        </h1>
+        <p class="hero-sub">
+          India's premium sports &amp; fitness store. Gear that performs as hard as you do.
+        </p>
+      </div>
+      <div class="hero-scroll-hint" id="scroll-hint">
+        <span>Scroll</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <!-- Section 2: Mastery (22–38% scroll) — slide-left -->
+    <div class="content-section align-left" id="sec-mastery"
+         data-animation="slide-left"
+         data-enter="22" data-leave="38"
+         style="top:50%; transform:translateY(-50%);">
+      <div class="section-inner">
+        <p class="section-label">002 / The Philosophy</p>
+        <h2 class="section-heading">
+          Mastery takes<br>
+          <span class="accent">the right tools.</span>
+        </h2>
+        <p class="section-body">
+          We've been equipping India's athletes for 54 years and counting.
+          Every product is curated, tested, and trusted.
+        </p>
+      </div>
+    </div>
+
+    <!-- Section 3: Stats (42–58% scroll) — scale-up, dark overlay -->
+    <div class="content-section align-center" id="sec-stats"
+         data-animation="scale-up"
+         data-enter="42" data-leave="60"
+         data-overlay="0.88"
+         style="top:50%; transform:translateY(-50%);">
+      <div class="section-inner" style="max-width:90vw; width:100%;">
+        <p class="section-label" style="text-align:center; margin-bottom:2.5rem;">003 / The Numbers</p>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-row">
+              <span class="stat-number" data-value="1500" data-decimals="0">0</span>
+              <span class="stat-suffix">+</span>
+            </div>
+            <p class="stat-label">Products</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-row">
+              <span class="stat-number" data-value="50" data-decimals="0">0</span>
+              <span class="stat-suffix">+</span>
+            </div>
+            <p class="stat-label">Premium Brands</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-row">
+              <span class="stat-number" data-value="54" data-decimals="0">0</span>
+              <span class="stat-suffix">yrs</span>
+            </div>
+            <p class="stat-label">Heritage</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Trust (62–78% scroll) — slide-right -->
+    <div class="content-section align-right" id="sec-trust"
+         data-animation="slide-right"
+         data-enter="62" data-leave="80"
+         style="top:50%; transform:translateY(-50%);">
+      <div class="section-inner">
+        <p class="section-label">004 / Why India Trusts Us</p>
+        <h2 class="section-heading">
+          India<br>trusts<br>
+          <span class="accent">us.</span>
+        </h2>
+        <ul class="trust-list">
+          <li>
+            <div class="trust-icon">✓</div>
+            <div>
+              <p class="trust-title">100% Genuine Products</p>
+              <p class="trust-desc">Pre-dispatch quality check on every order</p>
+            </div>
+          </li>
+          <li>
+            <div class="trust-icon">🚚</div>
+            <div>
+              <p class="trust-title">Free Shipping on ₹1,000+</p>
+              <p class="trust-desc">Delivered to your door, pan-India</p>
+            </div>
+          </li>
+          <li>
+            <div class="trust-icon">💬</div>
+            <div>
+              <p class="trust-title">WhatsApp Support 24/7</p>
+              <p class="trust-desc">Real humans. Real answers. Instant.</p>
+            </div>
+          </li>
+          <li>
+            <div class="trust-icon">↩</div>
+            <div>
+              <p class="trust-title">7-Day Easy Returns</p>
+              <p class="trust-desc">No questions asked return policy</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── CTA Final Section ───────────────────────────────────────── -->
+    <div class="cta-section" id="cta-section">
+      <p class="cta-eyebrow">005 / Game On</p>
+      <h2 class="cta-heading">
+        Gear Up.<br>
+        <span class="accent">Game On.</span>
+      </h2>
+      <p class="cta-sub">Health &amp; Fitness Since 1970 &nbsp;·&nbsp; lodhisports.com</p>
+      <div class="cta-buttons">
+        <a href="https://sportsnextdoor.com" target="_blank" class="btn-primary">
+          Explore Collection
+        </a>
+        <a href="https://wa.me/918368249099?text=Hi%2C%20I%20want%20to%20explore%20your%20sports%20collection" target="_blank" class="btn-secondary">
+          WhatsApp Us →
+        </a>
+      </div>
+      <div class="cta-footer">
+        <a href="#" class="cta-footer-logo">LODHI SPORTS</a>
+        <ul class="cta-footer-links">
+          <li><a href="https://sportsnextdoor.com/collections/badminton" target="_blank">Badminton</a></li>
+          <li><a href="https://sportsnextdoor.com/collections/fitness" target="_blank">Fitness</a></li>
+          <li><a href="https://sportsnextdoor.com/collections/cricket" target="_blank">Cricket</a></li>
+          <li><a href="https://sportsnextdoor.com/collections/tennis" target="_blank">Tennis</a></li>
+        </ul>
+        <p class="cta-footer-meta">© 2025 Lodhi Sports &nbsp;·&nbsp; +91 83682 49099</p>
+      </div>
+    </div>
+
+  </div><!-- /scroll-container -->
+
+  <script>
+  (() => {
+    'use strict';
+
+    /* ── Config ──────────────────────────────────────────────────────── */
+    const FRAME_COUNT  = 276;      // 23s × 12fps
+    const FRAME_SPEED  = 2.0;      // video completes at 50% scroll
+    const FRAME_PATH   = '/frames/frame_';
+    const FRAME_EXT    = '.jpg';
+    const PAD          = 4;        // frame_0001.jpg
+    const IMAGE_SCALE  = 0.86;
+
+    /* ── State ───────────────────────────────────────────────────────── */
+    const frames     = [];
+    let   loaded     = 0;
+    let   allReady   = false;
+    let   currentIdx = 0;
+    let   lenisInst  = null;
+
+    /* ── Canvas ──────────────────────────────────────────────────────── */
+    const canvas  = document.getElementById('canvas');
+    const ctx     = canvas.getContext('2d');
+    const dpr     = window.devicePixelRatio || 1;
+
+    function resizeCanvas() {
+      canvas.width  = window.innerWidth  * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width  = window.innerWidth  + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.scale(dpr, dpr);
+      drawFrame(currentIdx);
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawFrame(idx) {
+      const img = frames[idx];
+      if (!img || !img.complete) return;
+      const cw = window.innerWidth, ch = window.innerHeight;
+      const iw = img.naturalWidth,  ih = img.naturalHeight;
+      const scale = Math.max(cw / iw, ch / ih) * IMAGE_SCALE;
+      const dw = iw * scale, dh = ih * scale;
+      const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+      ctx.clearRect(0, 0, cw, ch);
+      // Fill with dark bg colour before drawing
+      ctx.fillStyle = '#0a0a0a';
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.drawImage(img, dx, dy, dw, dh);
+    }
+
+    /* ── Preloader ────────────────────────────────────────────────────  */
+    const loaderEl   = document.getElementById('loader');
+    const loaderBar  = document.getElementById('loader-bar');
+    const loaderPct  = document.getElementById('loader-percent');
+
+    function loadFrames() {
+      // Load first 10 frames fast for quick first paint
+      const priority = Math.min(10, FRAME_COUNT);
+      let   priorityDone = 0;
+
+      for (let i = 1; i <= FRAME_COUNT; i++) {
+        const img = new Image();
+        img.src = FRAME_PATH + String(i).padStart(PAD, '0') + FRAME_EXT;
+        frames[i - 1] = img;
+
+        img.onload = () => {
+          loaded++;
+          const pct = Math.round((loaded / FRAME_COUNT) * 100);
+          loaderBar.style.width = pct + '%';
+          loaderPct.textContent = pct + '%';
+
+          if (i <= priority) {
+            priorityDone++;
+            if (priorityDone === priority) {
+              resizeCanvas();
+              drawFrame(0);
+              // Reveal canvas with circle wipe
+              document.getElementById('canvas-wrap').style.clipPath = 'circle(0% at 50% 50%)';
+              initAfterFirstPaint();
+            }
+          }
+
+          if (loaded === FRAME_COUNT) {
+            allReady = true;
+          }
+        };
+        img.onerror = () => {
+          // Frame missing — still count as loaded so loader completes
+          loaded++;
+          if (i <= priority) {
+            priorityDone++;
+            if (priorityDone === priority) initAfterFirstPaint();
+          }
+          if (loaded === FRAME_COUNT) { allReady = true; initAfterFirstPaint(); }
+        };
+      }
+    }
+
+    /* ── Init after first frames ready ──────────────────────────────── */
+    let initDone = false;
+    function initAfterFirstPaint() {
+      if (initDone) return;
+      initDone = true;
+
+      // Hide loader
+      setTimeout(() => {
+        loaderEl.classList.add('hidden');
+        setTimeout(() => { loaderEl.style.display = 'none'; }, 700);
+      }, 300);
+
+      initLenis();
+      initAnimations();
+      initCursor();
+      heroEntrance();
+    }
+
+    /* ── Lenis ───────────────────────────────────────────────────────── */
+    function initLenis() {
+      lenisInst = new Lenis({
+        duration: 1.2,
+        easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      gsap.ticker.add(t => lenisInst.raf(t * 1000));
+      gsap.ticker.lagSmoothing(0);
+      lenisInst.on('scroll', ScrollTrigger.update);
+    }
+
+    /* ── Hero Entrance ───────────────────────────────────────────────── */
+    function heroEntrance() {
+      const tl = gsap.timeline({ delay: 0.2 });
+      // Header slides down
+      tl.fromTo('#site-header', { y: -70, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power3.out' });
+      // Hero words drop in
+      tl.fromTo(['#hw1','#hw2'], { y: '110%' },
+        { y: '0%', duration: 1, stagger: 0.12, ease: 'power3.out' }, '-=0.6');
+      // Sub text + hint
+      tl.fromTo('.hero-sub', { opacity: 0, y: 30 },
+        { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out' }, '-=0.4');
+      tl.fromTo('#scroll-hint', { opacity: 0 },
+        { opacity: 1, duration: 0.6 }, '-=0.2');
+      // Canvas circle wipe open
+      tl.to('#canvas-wrap', {
+        clipPath: 'circle(75% at 50% 50%)',
+        duration: 1.4, ease: 'power2.out',
+      }, 0.1);
+    }
+
+    /* ── Main Scroll Animations ───────────────────────────────────────── */
+    function initAnimations() {
+      const container = document.getElementById('scroll-container');
+
+      /* ── Frame scrubber ─────────────────────────────────────── */
+      ScrollTrigger.create({
+        trigger: container,
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate(self) {
+          const p = self.progress;
+
+          /* Canvas frame */
+          const acc = Math.min(p * FRAME_SPEED, 1);
+          const idx = Math.min(Math.floor(acc * FRAME_COUNT), FRAME_COUNT - 1);
+          if (idx !== currentIdx) { currentIdx = idx; drawFrame(idx); }
+
+          /* Scroll progress bar */
+          document.getElementById('scroll-progress-bar').style.width = (p * 100) + '%';
+
+          /* Header backdrop */
+          const header = document.getElementById('site-header');
+          if (p > 0.01) header.classList.add('scrolled');
+          else header.classList.remove('scrolled');
+
+          /* Marquee visibility */
+          const mq = document.getElementById('marquee-wrap');
+          const mqP = gsap.utils.clamp(0, 1, (p - 0.4) / 0.1);
+          mq.style.opacity = mqP;
+        },
+      });
+
+      /* ── Hero text fades out ───────────────────────────────── */
+      gsap.to('#hero-section', {
+        opacity: 0, y: -40,
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: '15% top',
+          scrub: 1,
+        },
+      });
+
+      /* ── Scroll hint fades out ─────────────────────────────── */
+      gsap.to('#scroll-hint', {
+        opacity: 0,
+        scrollTrigger: {
+          trigger: container,
+          start: 'top top',
+          end: '8% top',
+          scrub: 1,
+        },
+      });
+
+      /* ── Dark overlay for stats ────────────────────────────── */
+      ScrollTrigger.create({
+        trigger: container,
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate(self) {
+          const p = self.progress;
+          let overlayAlpha = 0;
+          // Fade in at 42%, full at 46%, out at 58%
+          if (p >= 0.42 && p <= 0.60) {
+            if (p < 0.46) overlayAlpha = (p - 0.42) / 0.04 * 0.88;
+            else if (p <= 0.56) overlayAlpha = 0.88;
+            else overlayAlpha = Math.max(0, 0.88 - ((p - 0.56) / 0.04) * 0.88);
+          }
+          document.getElementById('dark-overlay').style.background =
+            `rgba(4,3,2,${overlayAlpha})`;
+        },
+      });
+
+      /* ── Content sections ──────────────────────────────────── */
+      const sections = document.querySelectorAll('.content-section[data-enter]');
+      sections.forEach(sec => {
+        const enter = parseFloat(sec.dataset.enter) / 100;
+        const leave = parseFloat(sec.dataset.leave) / 100;
+        const anim  = sec.dataset.animation || 'fade-up';
+        const mid   = (enter + leave) / 2;
+
+        // Position absolute at midpoint
+        sec.style.top = (mid * 920) + 'vh';
+        sec.style.transform = 'translateY(-50%)';
+
+        const innerEls = sec.querySelectorAll(
+          '.section-label, .section-heading, .section-body, .stats-grid, .trust-list, .hero-sub'
+        );
+
+        const getFrom = (type) => {
+          switch(type) {
+            case 'fade-up':    return { opacity:0, y:50 };
+            case 'slide-left': return { opacity:0, x:-80 };
+            case 'slide-right':return { opacity:0, x:80 };
+            case 'scale-up':   return { opacity:0, scale:0.85 };
+            case 'rotate-in':  return { opacity:0, y:40, rotation:3 };
+            case 'clip-reveal':return { opacity:0, clipPath:'inset(100% 0 0 0)' };
+            default:           return { opacity:0, y:50 };
+          }
+        };
+        const getEase = (type) => {
+          if (type === 'scale-up')   return 'power2.out';
+          if (type === 'clip-reveal')return 'power4.inOut';
+          return 'power3.out';
+        };
+
+        ScrollTrigger.create({
+          trigger: container,
+          start: `${enter * 100}% top`,
+          end:   `${leave * 100}% top`,
+          onEnter() {
+            gsap.set(sec, { opacity:1, pointerEvents:'all' });
+            gsap.fromTo(innerEls, getFrom(anim), {
+              opacity:1, x:0, y:0, scale:1, rotation:0,
+              clipPath:'inset(0% 0 0 0)',
+              duration: anim === 'clip-reveal' ? 1.2 : 0.9,
+              stagger: 0.12, ease: getEase(anim),
+              onComplete() { animateCounters(sec); },
+            });
+          },
+          onLeaveBack() {
+            gsap.to(sec, { opacity:0, duration:0.4, pointerEvents:'none' });
+          },
+          onLeave() {
+            gsap.to(sec, { opacity:0, duration:0.4, pointerEvents:'none' });
+          },
+          onEnterBack() {
+            gsap.set(sec, { opacity:1, pointerEvents:'all' });
+            gsap.fromTo(innerEls, { opacity:0, y:20 }, {
+              opacity:1, y:0, duration:0.6, stagger:0.08, ease:'power2.out',
+            });
+          },
+        });
+      });
+
+      /* ── CTA section ───────────────────────────────────────── */
+      const cta = document.getElementById('cta-section');
+      const ctaEls = cta.querySelectorAll('.cta-eyebrow, .cta-heading, .cta-sub, .cta-buttons, .cta-footer');
+      gsap.set(ctaEls, { opacity:0, y:40 });
+      ScrollTrigger.create({
+        trigger: container,
+        start: '85% top',
+        onEnter() {
+          gsap.to(ctaEls, { opacity:1, y:0, duration:1, stagger:0.12, ease:'power3.out' });
+        },
+      });
+    }
+
+    /* ── Counter Animation ───────────────────────────────────────────── */
+    function animateCounters(section) {
+      section.querySelectorAll('.stat-number[data-value]').forEach(el => {
+        if (el.dataset.animated) return;
+        el.dataset.animated = 'true';
+        const target   = parseFloat(el.dataset.value);
+        const decimals = parseInt(el.dataset.decimals || '0');
+        gsap.fromTo(el,
+          { textContent: 0 },
+          {
+            textContent: target,
+            duration: 2,
+            ease: 'power1.out',
+            snap: { textContent: decimals === 0 ? 1 : 0.01 },
+            onUpdate() {
+              el.textContent = decimals > 0
+                ? parseFloat(el.textContent).toFixed(decimals)
+                : Math.floor(parseFloat(el.textContent));
+            },
+          }
+        );
+      });
+    }
+
+    /* ── Custom Cursor ───────────────────────────────────────────────── */
+    function initCursor() {
+      const dot  = document.getElementById('cursor-dot');
+      const ring = document.getElementById('cursor-ring');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+      (function animCursor() {
+        requestAnimationFrame(animCursor);
+        dot.style.left  = mx + 'px'; dot.style.top = my + 'px';
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      })();
+
+      document.querySelectorAll('a, button, [data-cursor-grow]').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          gsap.to(ring, { scale:2.5, duration:0.3 });
+          dot.style.transform = 'translate(-50%,-50%) scale(1.8)';
+        });
+        el.addEventListener('mouseleave', () => {
+          gsap.to(ring, { scale:1, duration:0.3 });
+          dot.style.transform = 'translate(-50%,-50%) scale(1)';
+        });
+      });
+    }
+
+    /* ── Mobile Menu ─────────────────────────────────────────────────── */
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.add('open');
+      lenisInst && lenisInst.stop();
+    });
+    document.getElementById('mobile-close').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.remove('open');
+      lenisInst && lenisInst.start();
+    });
+
+    /* ── Start ───────────────────────────────────────────────────────── */
+    gsap.registerPlugin(ScrollTrigger);
+    resizeCanvas();
+    loadFrames();
+
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-orange: #F97316;
+  --color-dark: #0a0a0a;
+  --color-light: #EEEAE4;
+  --color-mid: #1a1a1a;
+  --color-muted: #888888;
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--color-dark);
+  color: var(--color-light);
+  overflow-x: hidden;
+  font-family: var(--font-body), 'DM Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom cursor */
+* { cursor: none; }
+@media (hover: none) { * { cursor: auto; } }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--color-dark); }
+::-webkit-scrollbar-thumb { background: var(--color-orange); }
+
+/* Marquee */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.marquee-track       { animation: marquee-left  22s linear infinite; }
+.marquee-track-rev   { animation: marquee-right 28s linear infinite; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .marquee-track, .marquee-track-rev { animation: none; }
+}

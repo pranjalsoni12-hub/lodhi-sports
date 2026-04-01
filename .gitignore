@@ -2,6 +2,36 @@ node_modules
 dist
 .DS_Store
 .env
+.env.local
+.env*.local
+.next
+tsconfig.tsbuildinfo
 
-# Ignore the output video from Git but not videos you import into src/.
+# Build output
 out
+
+# Large unused model files (not referenced by any component)
+public/models/chess.glb
+public/models/cricket-ball.glb
+public/models/boxing-gloves.glb
+public/models/dumbbell.glb
+public/models/gym-equipment.glb
+public/models/pool-table-traditional.glb
+public/assets/chess.glb
+
+# Raw source GLB files (root-level working copies)
+chess_king.glb
+cricket_ball_3d_photoscan_low_poly.glb
+dumbbell.glb
+pool_table_traditional.glb
+vintage__old_boxing_gloves.glb
+
+# Screenshots
+"Screenshot *.png"
+Screenshot*.png
+
+# Internal tooling
+.claude/
+.mcp.json
+font-preview.html
+remotion/
