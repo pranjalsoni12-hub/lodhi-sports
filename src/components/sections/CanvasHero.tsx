@@ -128,13 +128,13 @@ export default function CanvasHero() {
           const idx = Math.min(Math.floor(p * FRAME_COUNT), FRAME_COUNT - 1);
           if (idx !== currentIdx) { currentIdx = idx; drawFrame(idx); }
 
-          // Stats overlay
+          // Stats overlay — ramps up before phase3 enters, clears as phase3 exits
           if (overlayRef.current) {
             let alpha = 0;
-            if (p >= 0.50 && p <= 0.72) {
-              if      (p < 0.54) alpha = ((p - 0.48) / 0.06) * 0.98;
-              else if (p < 0.68) alpha = 0.98;
-              else               alpha = Math.max(0, 0.98 - ((p - 0.68) / 0.06) * 0.98);
+            if (p >= 0.52 && p <= 0.82) {
+              if      (p < 0.58) alpha = ((p - 0.52) / 0.06) * 0.98;
+              else if (p < 0.73) alpha = 0.98;
+              else               alpha = Math.max(0, 0.98 - ((p - 0.73) / 0.09) * 0.98);
             }
             overlayRef.current.style.backgroundColor = `rgba(0,0,0,${alpha})`;
           }
@@ -144,42 +144,42 @@ export default function CanvasHero() {
       // Phase 1 → out
       gsap.to(phase1Ref.current, {
         opacity: 0, y: -40,
-        scrollTrigger: { trigger: wrapper, start: "10% top", end: "20% top", scrub: 1 },
+        scrollTrigger: { trigger: wrapper, start: "10% top", end: "18% top", scrub: 1 },
       });
       gsap.to(scrollHintRef.current, {
         opacity: 0,
         scrollTrigger: { trigger: wrapper, start: "top top", end: "7% top", scrub: 1 },
       });
 
-      // Phase 2 → in (drop from above)
+      // Phase 2 → in (gap: 18→24, ensures phase1 fully gone before phase2 appears)
       gsap.fromTo(phase2Ref.current,
         { opacity: 0, y: -80 },
         { opacity: 1, y: 0,
-          scrollTrigger: { trigger: wrapper, start: "22% top", end: "33% top", scrub: 1 } }
+          scrollTrigger: { trigger: wrapper, start: "24% top", end: "35% top", scrub: 1 } }
       );
-      // Phase 2 → out (rise upward)
+      // Phase 2 → out
       gsap.to(phase2Ref.current, {
         opacity: 0, y: -60,
-        scrollTrigger: { trigger: wrapper, start: "42% top", end: "50% top", scrub: 1 },
+        scrollTrigger: { trigger: wrapper, start: "44% top", end: "52% top", scrub: 1 },
       });
 
-      // Phase 3 → in (drop from above)
+      // Phase 3 → in (gap: 52→56, ensures phase2 fully gone before phase3 appears)
       gsap.fromTo(phase3Ref.current,
         { opacity: 0, y: -80, scale: 0.96 },
         { opacity: 1, y: 0, scale: 1,
-          scrollTrigger: { trigger: wrapper, start: "52% top", end: "62% top", scrub: 1 } }
+          scrollTrigger: { trigger: wrapper, start: "56% top", end: "66% top", scrub: 1 } }
       );
       // Phase 3 → out
       gsap.to(phase3Ref.current, {
         opacity: 0, y: -40,
-        scrollTrigger: { trigger: wrapper, start: "72% top", end: "80% top", scrub: 1 },
+        scrollTrigger: { trigger: wrapper, start: "73% top", end: "80% top", scrub: 1 },
       });
 
       // Counters — fire once on phase 3 enter
       let countersRun = false;
       ScrollTrigger.create({
         trigger: wrapper,
-        start: "52% top",
+        start: "56% top",
         onEnter: () => {
           if (countersRun) return;
           countersRun = true;
@@ -196,11 +196,11 @@ export default function CanvasHero() {
         },
       });
 
-      // Phase 4 → in (slide from right)
+      // Phase 4 → in (gap: 80→84, ensures phase3 fully gone before phase4 appears)
       gsap.fromTo(phase4Ref.current,
         { opacity: 0, x: 80 },
         { opacity: 1, x: 0,
-          scrollTrigger: { trigger: wrapper, start: "80% top", end: "90% top", scrub: 1 } }
+          scrollTrigger: { trigger: wrapper, start: "84% top", end: "93% top", scrub: 1 } }
       );
     }
 
@@ -339,7 +339,7 @@ export default function CanvasHero() {
                 <span className="text-orange-500">Game On.</span>
               </h2>
               <div className="mt-8 flex gap-6 justify-end flex-wrap pointer-events-auto">
-                <a href="https://sportsnextdoor.com"
+                <a href="https://lodhisport.com/"
                    target="_blank" rel="noopener noreferrer"
                    className="font-body text-[15px] tracking-[0.15em] uppercase font-semibold bg-orange-500 text-white px-10 py-4 hover:bg-orange-400 transition-colors duration-300">
                   Explore Collection
