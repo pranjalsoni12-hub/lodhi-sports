@@ -35,6 +35,7 @@ export default function CanvasHero() {
     let loaded      = 0;
     let currentIdx  = 0;
     let initDone    = false;
+    let gsapCtx: ReturnType<typeof gsap.context> | null = null;
 
     /* ── Canvas resize ─────────────────────────────────────────── */
     function resize() {
@@ -90,28 +91,30 @@ export default function CanvasHero() {
       if (initDone) return;
       initDone = true;
 
-      // Kill loader
-      gsap.to(loaderRef.current, {
-        opacity: 0, duration: 0.5, delay: 0.2,
-        onComplete: () => {
-          if (loaderRef.current) loaderRef.current.style.display = "none";
-        },
-      });
+      gsapCtx = gsap.context(() => {
+        // Kill loader
+        gsap.to(loaderRef.current, {
+          opacity: 0, duration: 0.5, delay: 0.2,
+          onComplete: () => {
+            if (loaderRef.current) loaderRef.current.style.display = "none";
+          },
+        });
 
-      // Circle-wipe reveal
-      gsap.fromTo(canvasWrapRef.current,
-        { clipPath: "circle(0% at 50% 50%)" },
-        { clipPath: "circle(75% at 50% 50%)", duration: 1.4, ease: "power2.out", delay: 0.3 }
-      );
+        // Circle-wipe reveal
+        gsap.fromTo(canvasWrapRef.current,
+          { clipPath: "circle(0% at 50% 50%)" },
+          { clipPath: "circle(75% at 50% 50%)", duration: 1.4, ease: "power2.out", delay: 0.3 }
+        );
 
-      // Phase 1 entrance
-      const tl = gsap.timeline({ delay: 0.7 });
-      tl.fromTo(".ch-label", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
-      tl.fromTo(".ch-word",  { yPercent: 110 }, { yPercent: 0, duration: 1.0, stagger: 0.07, ease: "power3.out" }, "-=0.2");
-      tl.fromTo(".ch-sub",   { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "-=0.5");
-      tl.fromTo(scrollHintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.2");
+        // Phase 1 entrance
+        const tl = gsap.timeline({ delay: 0.7 });
+        tl.fromTo(".ch-label", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" });
+        tl.fromTo(".ch-word",  { yPercent: 110 }, { yPercent: 0, duration: 1.0, stagger: 0.07, ease: "power3.out" }, "-=0.2");
+        tl.fromTo(".ch-sub",   { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, "-=0.5");
+        tl.fromTo(scrollHintRef.current, { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.2");
 
-      setupScrollTriggers();
+        setupScrollTriggers();
+      }, wrapperRef);
     }
 
     /* ── Scroll triggers ───────────────────────────────────────── */
@@ -206,6 +209,7 @@ export default function CanvasHero() {
 
     return () => {
       window.removeEventListener("resize", resize);
+      gsapCtx?.revert();
     };
   }, []);
 
