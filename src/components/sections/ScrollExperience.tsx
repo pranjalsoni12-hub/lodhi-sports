@@ -390,7 +390,7 @@ export default function ScrollExperience() {
                className="font-body text-[12px] tracking-[0.2em] uppercase font-semibold bg-orange-500 text-white px-12 py-4 hover:bg-orange-400 transition-colors duration-300">
               Explore Collection
             </a>
-            <a href="https://wa.me/918368249099?text=Hi%2C%20I%20want%20to%20explore%20your%20sports%20collection"
+            <a href="https://wa.me/919873408937?text=Hi%2C%20I%20want%20to%20explore%20your%20sports%20collection"
                target="_blank" rel="noopener noreferrer"
                className="font-body text-[12px] tracking-[0.2em] uppercase text-[#EEEAE4]/55 border-b border-[#EEEAE4]/20 pb-0.5 hover:text-orange-500 hover:border-orange-500 transition-colors duration-300">
               WhatsApp Us →

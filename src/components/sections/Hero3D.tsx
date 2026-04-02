@@ -358,7 +358,7 @@ export default function Hero3D() {
             >
               <MagneticButton>Explore Collection</MagneticButton>
               <a
-                href="https://wa.me/918368249099"
+                href="https://wa.me/919873408937"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-white/60 hover:text-orange-500 transition-colors duration-300 uppercase tracking-[0.15em] border-b border-white/20 hover:border-orange-500 pb-0.5"

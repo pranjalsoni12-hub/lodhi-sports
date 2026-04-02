@@ -18,7 +18,7 @@ export default function WhatsAppCTA({
   const message = encodeURIComponent(
     `Hi! I'm interested in ${productName}${price ? ` (₹${price})` : ""}. Can you confirm availability and price?`
   );
-  const href = `https://wa.me/918368249099?text=${message}`;
+  const href = `https://wa.me/919873408937?text=${message}`;
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!btnRef.current || variant !== "primary") return;

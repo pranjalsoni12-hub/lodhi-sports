@@ -58,7 +58,7 @@ export default function Navbar() {
       </ul>
 
       <a
-        href="https://wa.me/918368249099"
+        href="https://wa.me/919873408937"
         target="_blank"
         rel="noopener noreferrer"
         className="hidden md:flex items-center gap-2 text-base uppercase tracking-[0.08em] font-bold bg-orange-500 text-white px-7 py-3.5 hover:bg-orange-400 transition-colors duration-300"

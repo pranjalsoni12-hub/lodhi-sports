@@ -69,7 +69,7 @@ export default function CTAFooter() {
 
         <div className="flex flex-wrap gap-4">
           <a
-            href="https://wa.me/918368249099"
+            href="https://wa.me/919873408937"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#0a0a0a] text-white px-10 py-4 text-sm uppercase tracking-[0.15em] hover:bg-orange-500 transition-colors duration-300"
