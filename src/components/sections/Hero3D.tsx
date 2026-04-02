@@ -190,7 +190,7 @@ export default function Hero3D() {
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const phase2Ref = useRef<HTMLDivElement>(null);
   const phase3Ref = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 1023px)");
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(

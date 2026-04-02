@@ -62,7 +62,7 @@ const products = [
 export default function ProductSpotlight() {
   const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 1023px)");
 
   useEffect(() => {
     if (isMobile || !containerRef.current || !trackRef.current) return;
@@ -97,11 +97,11 @@ export default function ProductSpotlight() {
   if (isMobile) {
     // Mobile: vertical stack
     return (
-      <section className="bg-[#0a0a0a] py-24 px-6">
+      <section className="bg-[#0a0a0a] py-16 px-5">
         <p className="text-orange-500 text-xs uppercase tracking-[0.3em] mb-4">
           004 / Spotlight
         </p>
-        <h2 className="text-4xl font-black uppercase text-white mb-12">
+        <h2 className="text-[clamp(2rem,8vw,4rem)] font-black uppercase text-white mb-8">
           Top Picks
         </h2>
         <div className="flex flex-col gap-6">
@@ -155,12 +155,12 @@ function ProductCard({
 }) {
   if (mobile) {
     return (
-      <div className="w-full p-8 border border-white/[0.06]" style={{ background: product.bg }}>
-        <div className="text-6xl mb-6">{product.emoji}</div>
+      <div className="w-full p-6 border border-white/[0.06]" style={{ background: product.bg }}>
+        <div className="text-5xl mb-4">{product.emoji}</div>
         <p className="text-xs uppercase tracking-[0.2em] text-white/30 mb-2">{product.category}</p>
-        <h3 className="text-2xl font-black text-white uppercase mb-4 leading-tight">{product.name}</h3>
-        <div className="flex items-baseline gap-3 mb-4 flex-wrap">
-          <span className="text-3xl font-black text-white">₹{product.price}</span>
+        <h3 className="text-xl font-black text-white uppercase mb-3 leading-tight">{product.name}</h3>
+        <div className="flex items-baseline gap-3 mb-3 flex-wrap">
+          <span className="text-2xl font-black text-white">₹{product.price}</span>
           <span className="text-sm text-white/30 line-through">₹{product.originalPrice}</span>
           <span className="text-xs font-bold text-orange-500 bg-orange-500/10 px-2 py-0.5">{product.discount}</span>
         </div>

@@ -277,7 +277,7 @@ export default function ScrollExperience() {
       <div ref={containerRef} className="relative z-[10]" style={{ height: "920vh" }}>
 
         {/* Hero (0–12%) */}
-        <div className="ls-hero absolute top-0 h-screen w-full flex flex-col justify-end pointer-events-none px-[5vw] pb-[10vh]">
+        <div className="ls-hero absolute top-0 h-screen w-full flex flex-col justify-end pointer-events-none px-[6vw] pb-[10vh]">
           <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/80 mb-5">
             001 / Your Potential
           </p>
@@ -298,9 +298,9 @@ export default function ScrollExperience() {
 
         {/* Section 2 — Mastery (22–38%) slide-left */}
         <div id="ls-sec-mastery"
-             className="content-section absolute left-0 right-0 flex items-center pointer-events-none opacity-0 px-[5vw]"
+             className="content-section absolute left-0 right-0 flex items-center pointer-events-none opacity-0 px-[6vw]"
              style={{ transform: "translateY(-50%)" }}>
-          <div className="max-w-[min(40vw,90vw)] w-full">
+          <div className="w-full max-w-[600px]">
             <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/85 mb-5">
               002 / The Philosophy
             </p>
@@ -344,9 +344,9 @@ export default function ScrollExperience() {
 
         {/* Section 4 — Trust (62–80%) slide-right */}
         <div id="ls-sec-trust"
-             className="content-section absolute left-0 right-0 flex items-center justify-end pointer-events-none opacity-0 px-[5vw]"
+             className="content-section absolute left-0 right-0 flex items-center justify-end pointer-events-none opacity-0 px-[6vw]"
              style={{ transform: "translateY(-50%)" }}>
-          <div className="max-w-[min(40vw,90vw)] w-full text-right">
+          <div className="w-full max-w-[600px] text-right">
             <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/85 mb-5">
               004 / Why India Trusts Us
             </p>

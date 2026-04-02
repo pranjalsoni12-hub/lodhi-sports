@@ -46,9 +46,9 @@ export default function Categories() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#f5f0eb] py-32 px-8 md:px-16 lg:px-24"
+      className="bg-[#f5f0eb] py-16 md:py-32 px-6 md:px-16 lg:px-24"
     >
-      <div className="flex justify-between items-end mb-16">
+      <div className="flex justify-between items-end mb-10 md:mb-16">
         <div>
           <p className="text-orange-500 text-sm font-semibold uppercase tracking-[0.2em] mb-4">
             003 / Categories
@@ -73,23 +73,23 @@ export default function Categories() {
         {categories.map((cat) => (
           <div
             key={cat.name}
-            className="cat-card group relative bg-[#0a0a0a] p-12 overflow-hidden opacity-0 min-h-[300px] flex flex-col justify-between"
+            className="cat-card group relative bg-[#0a0a0a] p-8 md:p-12 overflow-hidden opacity-0 min-h-[220px] md:min-h-[300px] flex flex-col justify-between"
             style={{ cursor: "pointer" }}
           >
             {/* Hover clip-path reveal */}
             <div className="absolute inset-0 bg-orange-500 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
 
             <div className="relative z-10">
-              <span className="text-6xl mb-8 block">{cat.icon}</span>
-              <h3 className="text-3xl font-black uppercase text-white group-hover:text-[#0a0a0a] transition-colors duration-300 leading-tight">
+              <span className="text-5xl md:text-6xl mb-4 md:mb-8 block">{cat.icon}</span>
+              <h3 className="text-2xl md:text-3xl font-black uppercase text-white group-hover:text-[#0a0a0a] transition-colors duration-300 leading-tight">
                 {cat.name}
               </h3>
-              <p className="mt-3 text-white/70 group-hover:text-[#0a0a0a]/70 text-lg transition-colors duration-300 font-medium">
+              <p className="mt-2 text-white/70 group-hover:text-[#0a0a0a]/70 text-base md:text-lg transition-colors duration-300 font-medium">
                 {cat.count}+ products
               </p>
             </div>
 
-            <div className="relative z-10 mt-10 flex justify-end">
+            <div className="relative z-10 mt-6 md:mt-10 flex justify-end">
               <span className="text-sm uppercase tracking-[0.15em] text-white/40 group-hover:text-[#0a0a0a]/70 transition-colors duration-300">
                 Explore →
               </span>
