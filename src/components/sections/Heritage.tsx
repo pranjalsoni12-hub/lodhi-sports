@@ -97,7 +97,7 @@ export default function Heritage() {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#0a0a0a] py-32 px-8 md:px-16 lg:px-24"
+      className="bg-[#0a0a0a] py-16 md:py-32 px-6 md:px-16 lg:px-24"
     >
       <p className="text-orange-500 text-sm font-semibold uppercase tracking-[0.2em] mb-8">
         002 / Heritage
@@ -121,7 +121,7 @@ export default function Heritage() {
 
       <div
         ref={statsRef}
-        className="grid grid-cols-2 md:grid-cols-4 gap-12"
+        className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12"
       >
         {stats.map((stat, i) => (
           <div key={stat.label} className="stat-item opacity-0">

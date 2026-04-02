@@ -248,7 +248,7 @@ export default function ScrollExperience() {
         <p className="font-heading text-[clamp(3rem,8vw,6rem)] tracking-[0.08em] text-[#EEEAE4]">
           LODHI <span className="text-orange-500">SPORTS</span>
         </p>
-        <div className="w-[200px] h-px bg-white/10 overflow-hidden">
+        <div className="w-[min(200px,60vw)] h-px bg-white/10 overflow-hidden">
           <div ref={loaderBarRef} className="h-full bg-orange-500 transition-[width] duration-200" style={{ width: "0%" }} />
         </div>
         <span ref={loaderPctRef} className="font-body text-[11px] tracking-[0.2em] uppercase text-white/30">0%</span>
@@ -281,12 +281,12 @@ export default function ScrollExperience() {
           <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/80 mb-5">
             001 / Your Potential
           </p>
-          <h1 className="font-heading text-[clamp(7rem,14vw,14rem)] leading-[0.88] tracking-wide uppercase text-[#EEEAE4]"
+          <h1 className="font-heading text-[clamp(4rem,14vw,14rem)] leading-[0.88] tracking-wide uppercase text-[#EEEAE4]"
               aria-label="Push Further">
             <span className="block overflow-hidden"><span className="ls-hw block">PUSH</span></span>
             <span className="block overflow-hidden"><span className="ls-hw block">FURTHER.</span></span>
           </h1>
-          <p className="ls-hero-sub font-body text-[clamp(0.85rem,1.2vw,1.05rem)] tracking-wide text-[#EEEAE4]/50 mt-6 max-w-md leading-relaxed opacity-0">
+          <p className="ls-hero-sub font-body text-[clamp(0.8rem,1.2vw,1.05rem)] tracking-wide text-[#EEEAE4]/50 mt-4 max-w-md leading-relaxed opacity-0">
             India&apos;s premium sports &amp; fitness store.<br />Gear that performs as hard as you do.
           </p>
 
@@ -300,11 +300,11 @@ export default function ScrollExperience() {
         <div id="ls-sec-mastery"
              className="content-section absolute left-0 right-0 flex items-center pointer-events-none opacity-0 px-[5vw]"
              style={{ transform: "translateY(-50%)" }}>
-          <div className="max-w-[40vw]">
+          <div className="max-w-[min(40vw,90vw)] w-full">
             <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/85 mb-5">
               002 / The Philosophy
             </p>
-            <h2 className="ls-heading font-heading text-[clamp(3.5rem,8vw,9rem)] leading-[0.88] uppercase text-[#EEEAE4]">
+            <h2 className="ls-heading font-heading text-[clamp(2.5rem,8vw,9rem)] leading-[0.88] uppercase text-[#EEEAE4]">
               Mastery takes<br />
               <span className="text-orange-500">the right tools.</span>
             </h2>
@@ -323,13 +323,13 @@ export default function ScrollExperience() {
             <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/85 mb-10 text-center">
               003 / The Numbers
             </p>
-            <div className="ls-stats-grid grid grid-cols-3 divide-x divide-white/[0.06]">
+            <div className="ls-stats-grid grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.06]">
               {[
                 { value: "1500", suffix: "+", label: "Products" },
                 { value: "50",   suffix: "+", label: "Premium Brands" },
                 { value: "54",   suffix: "yrs", label: "Of Heritage" },
               ].map(s => (
-                <div key={s.label} className="flex flex-col items-center py-16 px-8">
+                <div key={s.label} className="flex flex-col items-center py-8 sm:py-16 px-4 sm:px-8">
                   <div className="flex items-baseline gap-1">
                     <span className="ls-stat-num font-heading text-[clamp(4.5rem,9vw,10rem)] leading-none text-[#EEEAE4]"
                           data-value={s.value} data-decimals="0">0</span>
@@ -346,11 +346,11 @@ export default function ScrollExperience() {
         <div id="ls-sec-trust"
              className="content-section absolute left-0 right-0 flex items-center justify-end pointer-events-none opacity-0 px-[5vw]"
              style={{ transform: "translateY(-50%)" }}>
-          <div className="max-w-[40vw] text-right">
+          <div className="max-w-[min(40vw,90vw)] w-full text-right">
             <p className="ls-label font-body text-[11px] tracking-[0.28em] uppercase text-orange-500/85 mb-5">
               004 / Why India Trusts Us
             </p>
-            <h2 className="ls-heading font-heading text-[clamp(3.5rem,8vw,9rem)] leading-[0.88] uppercase text-[#EEEAE4]">
+            <h2 className="ls-heading font-heading text-[clamp(2.5rem,8vw,9rem)] leading-[0.88] uppercase text-[#EEEAE4]">
               India<br />trusts<br /><span className="text-orange-500">us.</span>
             </h2>
             <ul className="ls-trust-list mt-8 space-y-5 text-left">
@@ -398,9 +398,9 @@ export default function ScrollExperience() {
           </div>
 
           {/* Footer meta */}
-          <div className="ls-cta-el absolute bottom-[5vh] left-0 right-0 flex items-center justify-between px-[5vw]">
+          <div className="ls-cta-el absolute bottom-[5vh] left-0 right-0 flex flex-col md:flex-row items-center justify-between gap-3 px-[5vw]">
             <span className="font-heading text-lg tracking-wide text-[#EEEAE4]/20">LODHI SPORTS</span>
-            <div className="flex gap-8">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8">
               {["Badminton","Fitness","Cricket","Tennis"].map(cat => (
                 <a key={cat}
                    href={`https://sportsnextdoor.com/collections/${cat.toLowerCase()}`}
@@ -410,7 +410,7 @@ export default function ScrollExperience() {
                 </a>
               ))}
             </div>
-            <span className="font-body text-[10px] tracking-[0.14em] text-[#EEEAE4]/20">
+            <span className="font-body text-[10px] tracking-[0.14em] text-[#EEEAE4]/20 text-center">
               © 2025 Lodhi Sports · +91 83682 49099
             </span>
           </div>

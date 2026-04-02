@@ -24,9 +24,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom cursor */
-* { cursor: none; }
-@media (hover: none) { * { cursor: auto; } }
+/* Custom cursor — desktop only */
+@media (hover: hover) and (pointer: fine) { * { cursor: none; } }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 3px; }

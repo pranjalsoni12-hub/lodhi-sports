@@ -172,7 +172,7 @@ function MagneticButton({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
-      className="group relative px-10 py-4 bg-orange-500 text-white text-sm uppercase tracking-[0.2em] overflow-hidden hover:bg-orange-400 transition-colors duration-300"
+      className="group relative px-7 py-3.5 md:px-10 md:py-4 bg-orange-500 text-white text-sm uppercase tracking-[0.2em] overflow-hidden hover:bg-orange-400 transition-colors duration-300"
       style={{ willChange: "transform" }}
     >
       <span className="relative z-10">{children}</span>
@@ -301,7 +301,7 @@ export default function Hero3D() {
 
   return (
     // Tall wrapper — gives scrollable room for the pinned animation
-    <div ref={wrapperRef} className="relative h-[300vh]">
+    <div ref={wrapperRef} className={`relative ${isMobile ? "h-[150vh]" : "h-[300vh]"}`}>
       {/* Sticky container — stays fixed while wrapper scrolls */}
       <div
         ref={stickyRef}
@@ -347,14 +347,14 @@ export default function Hero3D() {
             </h1>
             <p
               ref={subRef}
-              className="mt-6 text-white/60 text-lg font-light tracking-wide max-w-md opacity-0"
+              className="mt-4 text-white/60 text-sm md:text-lg font-light tracking-wide max-w-md opacity-0"
             >
               Health &amp; Fitness Since 1970. Premium gear for every sport,
               delivered to your door.
             </p>
             <div
               ref={ctaRef}
-              className="mt-10 flex items-center gap-6 opacity-0 pointer-events-auto"
+              className="mt-6 md:mt-10 flex items-center gap-4 md:gap-6 flex-wrap opacity-0 pointer-events-auto"
             >
               <MagneticButton>Explore Collection</MagneticButton>
               <a
@@ -372,7 +372,7 @@ export default function Hero3D() {
         {/* Phase 2: Mid-scroll text — top-down camera */}
         <div
           ref={phase2Ref}
-          className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-20 opacity-0 pointer-events-none"
+          className="absolute inset-0 flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-12 md:pb-20 opacity-0 pointer-events-none"
         >
           <p className="text-orange-500 text-xs uppercase tracking-[0.3em] mb-3">
             Every Move Matters
